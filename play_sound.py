@@ -3,7 +3,6 @@ import numpy as np
 import threading
 import sounddevice as sd
 import time
-import keyboard
 
 audio_playing = False
 
@@ -18,7 +17,7 @@ def play_beep():
             sd.play(audio_sig, 44100)
             sd.wait()
 
-    print("Press 't' to stop")
+    print("Beep started.")
     
     while True:
         if not audio_playing:
@@ -26,12 +25,11 @@ def play_beep():
             audio_thread = threading.Thread(target=play_sound, args=(2400, 1))
             audio_thread.start()
         
-        if keyboard.is_pressed('t'):
-            audio_playing = False
-            audio_thread.join()
-            sd.stop()
-            print("Beep stopped.")
+        time.sleep(1)
+        if not audio_thread.is_alive():
             break
+
+    print("Beep stopped.")
 
 if __name__ == "__main__":
     play_beep()
