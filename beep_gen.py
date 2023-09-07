@@ -5,8 +5,11 @@ import threading
 import pyaudio
 import wave
 
+audio_playing = False
 
 def play_sound(frequency, duration):
+    global audio_playing
+    
     p = pyaudio.PyAudio()
 
     stream = p.open(format=pyaudio.paFloat32, channels=1, rate=44100, output=True)
@@ -21,9 +24,10 @@ def play_sound(frequency, duration):
             print("ALARM")
             stream.write(audio_sig.tobytes())
 
-        stream.stop_stream()
-        stream.close()
-        p.terminate()
+    stream.stop_stream()
+    stream.close()
+    p.terminate()
+    audio_playing = False
 
 if __name__ == "__main__":
     print("Press 't' to stop")
