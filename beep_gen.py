@@ -3,15 +3,13 @@ import numpy as np
 import keyboard
 import threading
 import pyaudio
-import wave
-
-audio_playing = False
 
 
 def play_beep():
-    global audio_playing
+    audio_playing = False
 
     def play_sound(frequency, duration):
+        nonlocal audio_playing
 
         p = pyaudio.PyAudio()
 
