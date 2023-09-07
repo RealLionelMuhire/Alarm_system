@@ -28,6 +28,7 @@ def play_sound(frequency, duration):
 if __name__ == "__main__":
     print("Press 't' to stop")
     audio_thread = threading.Thread(target=play_sound, args=(2400, 1))
+    audio_thread.start()
     keyboard.wait('t')
     audio_thread.join()
     print("Beep stopped.")
