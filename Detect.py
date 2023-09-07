@@ -5,7 +5,7 @@ import imutils
 import threading
 import play_sound
 
-cap = cv.VideoCapture(0)
+cap = cv.VideoCapture(0, cv.CAP_DSHOW)
 
 
 cap.set(cv.CAP_PROP_FRAME_WIDTH, 640)
@@ -31,4 +31,31 @@ while True:
         frame_bw = cv.GaussianBlur(frame_bw, (5, 5), 0)
 
         difference = cv.absdiff(frame_bw, start_)
-        threshold = cv.
+        threshold = cv.threshold(difrence, 25, 255, cv.THRESH_BINARY)[1]
+        start_frame = frame_bw
+
+        if threshold.sum() > 3000:
+            alarm_counter = 1
+        else:
+            if alarm_counter > 0:
+                alarm_counter -= 1
+            
+        cv.imshow("Cam", threshold)
+    else:
+        cv.imshow("Cam", frame)
+    
+    if alarm_counter > 20:
+        if not alarm:
+            alarm = True
+            play_sound.play_beep()
+        
+        key_pressed = cv.waitKey(30)
+        if key_pressed == ord("t"):
+            alarm_mode = not alarm_mode
+            alarm_counter = 0
+        if key_pressed == ord("q"):
+            alarm_mode = False
+            break
+
+cap.release()
+cv.destroyAllWindows()
