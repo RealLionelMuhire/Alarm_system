@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import cv2 as cv
 import imutils
 import play_sound
