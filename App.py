@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 import cv2 as cv
 import imutils
 import play_sound
@@ -57,11 +56,14 @@ while True:
                 alarm = True
                 play_sound.play_beep()
             
+            # Get the pressed key code
             key_pressed = cv.waitKey(30)
+            
+            # Check for the 't' and 'q' key codes
             if key_pressed == ord("t"):
                 alarm_mode = not alarm_mode
                 alarm_counter = 0
-            if key_pressed == ord("q"):
+            elif key_pressed == ord("q"):
                 alarm_mode = False
                 break
 
