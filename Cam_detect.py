@@ -1,10 +1,13 @@
 #!/usr/bin/python3
 import cv2 as cv
 import imutils
-import threading
 import play_sound
 
-cap = cv.VideoCapture(0, cv.CAP_DSHOW)
+cap = cv.VideoCapture(0)
+
+if not cap.isOpened():
+    print("Error: Could not open camera.")
+    exit()
 
 cap.set(cv.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv.CAP_PROP_FRAME_HEIGHT, 480)
@@ -19,9 +22,15 @@ alarm = False
 alarm_mode = False
 alarm_counter = 0
 
-while True:
+# Specify the windowing backend and resize the window
+cv.namedWindow("Cam", cv.WINDOW_NORMAL)
+cv.resizeWindow("Cam", 640, 480)
 
+print("Press 't' to toggle alarm mode or 'q' to exit.")
+
+while True:
     _, frame = cap.read()
+    
     if frame is not None:
         frame = imutils.resize(frame, width=500)
 
@@ -29,8 +38,8 @@ while True:
             frame_bw = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
             frame_bw = cv.GaussianBlur(frame_bw, (5, 5), 0)
 
-            difference = cv.absdiff(frame_bw, start_)
-            threshold = cv.threshold(difrence, 25, 255, cv.THRESH_BINARY)[1]
+            difference = cv.absdiff(frame_bw, start_frame)
+            threshold = cv.threshold(difference, 25, 255, cv.THRESH_BINARY)[1]
             start_frame = frame_bw
 
             if threshold.sum() > 3000:
@@ -55,9 +64,6 @@ while True:
             if key_pressed == ord("q"):
                 alarm_mode = False
                 break
-
-        # Add this line to see the output while the program is running.
-        #cv.waitKey(1)
 
 cap.release()
 cv.destroyAllWindows()
