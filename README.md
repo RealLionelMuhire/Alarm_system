@@ -25,7 +25,7 @@ To install the required packages, you can use the following command:
 
 Then:
 
-`pip install -r requirements.txt`
+`pip install -r Requirements.txt`
 
 
 `python App.py`
