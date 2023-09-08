@@ -15,19 +15,20 @@ The Security System is a simple application built with Python using OpenCV and s
 
 The Security System uses computer vision techniques to analyze camera frames and detect motion. When motion is detected, an alarm mode is activated, and a sound alert is triggered. Users can toggle the alarm mode and exit the application as needed.
 
+Before starting make sure you have the following installed:
+
+- Python 3.9+
+
 To install the required packages, you can use the following command:
-```bash
-cd Alarm_system
+
+`cd Alarm_system`
+
+Then:
+
+`pip install -r requirements.txt`
 
 
-
-```bash
-pip install -r requirements.txt
-
-
-
-```bash
-python App.py
+`python App.py`
 
 
 ## Usage
